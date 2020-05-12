@@ -23,7 +23,7 @@
     <artifactId>risk-score-node</artifactId>
 
     <groupId>org.forgerock.openam.auth.nodes</groupId>
-    <version>6.5.0.1-SNAPSHOT</version>    
+    <version>6.5.0.1</version>
     <name>Template for an Auth Tree Node maven project</name>
     <description>An Authentication Tree Node for ForgeRock's Identity Platform</description>
 

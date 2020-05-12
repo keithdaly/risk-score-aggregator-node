@@ -61,7 +61,7 @@ public class RiskScoreAggregatorNode implements Node
     public interface Config {
 
         @Attribute(order = 100)
-        default String riskScoresAttr() { return "riskSCORES"; }
+        default String riskScoresAttr() { return "RISK_SCORES"; }
 
         @Attribute(order = 200)
         default ScoreModel scoreModel() { return ScoreModel.MAXIMUM; }
@@ -139,6 +139,10 @@ public class RiskScoreAggregatorNode implements Node
             }
             totalAverage = totalWScore / totalWeight;
         } catch (Exception e) {
+            totalWScore = 0.0;
+            totalWeight = 0.0;
+            maxScore = 0.0;
+            totalAverage = 0.0;
         }
 
         debug.message("[" + DEBUG_FILE + ":" + NODE_NAME + "] TotalWScore : " + totalWScore + " | TotalWeight : " + totalWeight + " |  TotalAverage : " + totalAverage + " | MaxScore : " + maxScore);

@@ -35,11 +35,31 @@ import com.google.common.collect.ImmutableMap;
  */
 public class RiskScoreNodePlugin extends AbstractNodeAmPlugin {
 
+	static private String currentVersion = "6.5.0.1";
+
+	/**
+	 * Specify the Map of list of node classes that the plugin is providing. These will then be installed and
+	 *  registered at the appropriate times in plugin lifecycle.
+	 *
+	 * @return The list of node classes.
+	 */
 	@Override
-	public String getPluginVersion() {
-		return "1.0.0";
+	protected Map<String, Iterable<? extends Class<? extends Node>>> getNodesByVersion() {
+		return ImmutableMap.of(
+				currentVersion, asList(
+						RiskScoreAddNode.class,
+						RiskScoreAggregatorNode.class)
+		);
 	}
 
+	/**
+	 * This method will be called when the version returned by {@link #getPluginVersion()} is higher than the
+	 * version already installed. This method will be called before the {@link #onStartup()} method.
+	 *
+	 * No need to implement this untils there are multiple versions of your auth node.
+	 *
+	 * @param fromVersion The old version of the plugin that has been installed.
+	 */
 	@Override
 	public void upgrade(String fromVersion) throws PluginException {
 		//if (fromVersion.equals("1.0.0")) {
@@ -48,13 +68,15 @@ public class RiskScoreNodePlugin extends AbstractNodeAmPlugin {
 		super.upgrade(fromVersion);
 	}
 
+	/**
+	 * The plugin version. This must be in semver (semantic version) format.
+	 *
+	 * @return The version of the plugin.
+	 * @see <a href="https://www.osgi.org/wp-content/uploads/SemanticVersioning.pdf">Semantic Versioning</a>
+	 */
 	@Override
-	protected Map<String, Iterable<? extends Class<? extends Node>>> getNodesByVersion() {
-		return ImmutableMap.of(
-				"1.0.0", asList(
-						RiskScoreAddNode.class,
-						RiskScoreAggregatorNode.class)
-		);
+	public String getPluginVersion() {
+		return RiskScoreNodePlugin.currentVersion;
 	}
 
 }
